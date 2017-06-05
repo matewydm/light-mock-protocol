@@ -15,9 +15,18 @@ public class LampRestController {
 
     private ConcurrentHashMap<Integer, LampData> lampMap = new ConcurrentHashMap();
 
-    @RequestMapping(value = "/status/{id}", method = RequestMethod.POST)
-    public String dare (@PathVariable(name = "id") Integer id) {
+    @RequestMapping(value = "/status/{id}", method = RequestMethod.GET)
+    public String getStatus(@PathVariable(name = "id") Integer id) {
         return lampMap.get(id).getStatus();
+    }
+
+    @RequestMapping(value = "/{status}/{id}", method = RequestMethod.POST)
+    public void setStatus(@PathVariable(name = "status") String status ,@PathVariable(name = "id") Integer id) {
+        if (isStatusValid(status) && lampMap.get(id) != null) {
+            lampMap.get(id).setStatus(status);
+        } else {
+            throw new IllegalArgumentException("Illegal status argument or lamp doesn't exist");
+        }
     }
 
     @PostConstruct
@@ -32,5 +41,11 @@ public class LampRestController {
 
     private void putToLampMap(int lampId, String status) {
         lampMap.put(lampId, new LampData(lampId,status));
+    }
+
+    private boolean isStatusValid (String status) {
+        return  status.equalsIgnoreCase(LampData.Status.BROKEN) ||
+                status.equalsIgnoreCase(LampData.Status.OFF) ||
+                status.equalsIgnoreCase(LampData.Status.ON);
     }
 }
