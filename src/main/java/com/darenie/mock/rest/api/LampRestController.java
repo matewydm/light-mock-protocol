@@ -1,19 +1,22 @@
 package com.darenie.mock.rest.api;
 
 import com.darenie.mock.model.dto.LampData;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.PostConstruct;
+import javax.ws.rs.core.Response;
 import java.util.concurrent.ConcurrentHashMap;
 
 @RestController
 @RequestMapping("/lamp")
 public class LampRestController {
 
-    private ConcurrentHashMap<Integer, LampData> lampMap = new ConcurrentHashMap();
+    private ConcurrentHashMap<Integer, LampData> lampMap = new ConcurrentHashMap<>();
 
     @RequestMapping(value = "/status/{id}", method = RequestMethod.GET)
     public String getStatus(@PathVariable(name = "id") Integer id) {
@@ -21,12 +24,13 @@ public class LampRestController {
     }
 
     @RequestMapping(value = "/{status}/{id}", method = RequestMethod.POST)
-    public void setStatus(@PathVariable(name = "status") String status ,@PathVariable(name = "id") Integer id) {
+    public ResponseEntity setStatus(@PathVariable(name = "status") String status , @PathVariable(name = "id") Integer id) {
         if (isStatusValid(status) && lampMap.get(id) != null) {
             lampMap.get(id).setStatus(status);
         } else {
             throw new IllegalArgumentException("Illegal status argument or lamp doesn't exist");
         }
+        return ResponseEntity.ok(null);
     }
 
     @PostConstruct
