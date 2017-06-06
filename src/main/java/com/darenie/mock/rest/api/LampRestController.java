@@ -32,11 +32,11 @@ public class LampRestController {
     @PostConstruct
     private void fillMap() {
         putToLampMap(1,LampData.Status.BROKEN);
-        putToLampMap(2,LampData.Status.ON);
-        putToLampMap(3,LampData.Status.ON);
+        putToLampMap(2,LampData.Status.WORKING);
+        putToLampMap(3,LampData.Status.WORKING);
         putToLampMap(4,LampData.Status.BROKEN);
-        putToLampMap(5,LampData.Status.ON);
-        putToLampMap(6,LampData.Status.OFF);
+        putToLampMap(5,LampData.Status.WORKING);
+        putToLampMap(6,LampData.Status.NOT_WORKING);
     }
 
     private void putToLampMap(int lampId, String status) {
@@ -45,7 +45,7 @@ public class LampRestController {
 
     private boolean isStatusValid (String status) {
         return  status.equalsIgnoreCase(LampData.Status.BROKEN) ||
-                status.equalsIgnoreCase(LampData.Status.OFF) ||
-                status.equalsIgnoreCase(LampData.Status.ON);
+                status.equalsIgnoreCase(LampData.Status.NOT_WORKING) ||
+                status.equalsIgnoreCase(LampData.Status.WORKING);
     }
 }

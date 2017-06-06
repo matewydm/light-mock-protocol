@@ -14,9 +14,9 @@ public class LampData {
     }
 
     public interface Status {
-        String ON = "ON";
-        String OFF = "OFF";
-        String BROKEN = "BROKEN";
+        String WORKING ="W";
+        String NOT_WORKING ="N";
+        String BROKEN ="B";
     }
 
     public Integer getLampId() {

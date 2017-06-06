@@ -1,1 +1,5 @@
+com/darenie/mock/model/dto/LampData$Status.class
 com/darenie/mock/LightProtocolApplication.class
+com/darenie/mock/model/dto/LampData.class
+com/darenie/mock/rest/api/LampRestController.class
+com/darenie/mock/config/SecurityConfig.class
